@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MangaCrawlerTests", "MangaC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MangaCrawler", "MangaCrawler\MangaCrawler.csproj", "{7B4C0208-41F9-40A3-A705-B43991C2963C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MangaCrawler.API", "MangaCrawler.API\MangaCrawler.API.csproj", "{6B82A870-478B-4F3B-A457-B4760C4BC47B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MangaCrawler.API", "MangaCrawler.API\MangaCrawler.API.csproj", "{6B82A870-478B-4F3B-A457-B4760C4BC47B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{238BCD24-1968-40AF-9836-5581B3830DAB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,6 +32,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C2120885-5A09-4FBB-9F63-B89CCC48B76E} = {238BCD24-1968-40AF-9836-5581B3830DAB}
+		{7B4C0208-41F9-40A3-A705-B43991C2963C} = {238BCD24-1968-40AF-9836-5581B3830DAB}
+		{6B82A870-478B-4F3B-A457-B4760C4BC47B} = {238BCD24-1968-40AF-9836-5581B3830DAB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {45B0DA32-F4DE-4F72-A129-B4EB5E2378D2}
