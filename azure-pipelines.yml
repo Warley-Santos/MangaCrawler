@@ -1,0 +1,34 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: 'windows-latest'
+
+steps:
+#configure .net version
+- task: UseDotNet@2
+  inputs:
+    version: 3.x
+    performMultiLevelLookup: true
+
+#restore pacotes nuget
+- task: DotNetCoreCLI@2
+  inputs:
+    command: restore
+    projects: src/**/*.csproj
+  
+- task: DotNetCoreCLI@2
+  inputs:
+    command: build
+    projects: src/**/*.csproj
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: test
+    projects: src/**/*Tests.csproj
+    arguments: --no-restore 
