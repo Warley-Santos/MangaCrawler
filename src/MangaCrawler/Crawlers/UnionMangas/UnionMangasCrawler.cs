@@ -1,8 +1,10 @@
 ﻿using HtmlAgilityPack;
 using MangaCrawler.Model;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace MangaCrawler
 {
@@ -88,6 +90,18 @@ namespace MangaCrawler
 			}
 
 			return pagesList;
+		}
+
+		public List<MangaResultSearch> Search(string param)
+		{
+			var t = Task.Run(() => HttpUtils.GetURI(new Uri(Source.GetSearchUrl() + param)));
+			t.Wait();
+
+			string result = t.Result.Replace(@"\", "");
+
+			MangaResultList mangas = JsonConvert.DeserializeObject<MangaResultList>(result);
+			
+			return mangas.items;
 		}
 	}
 }

@@ -10,5 +10,6 @@ namespace MangaCrawler
 		List<Manga> GetMangasVisualizationOrder();
 		List<Chapter> GetChapters(string url);
 		List<Page> GetPages(string url);
+		List<MangaResultSearch> Search(string param);
 	}
 }

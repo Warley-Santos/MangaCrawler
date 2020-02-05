@@ -8,5 +8,6 @@
 		public string GetChapterPagesPath();
 		public string GetMangaListPath();
 		public string GetMangaListPath(int i);
+		public string GetSearchUrl();
 	}
 }

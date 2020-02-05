@@ -41,5 +41,10 @@ namespace MangaCrawler
 		{
 			return GetMangaListPath() + String.Concat("[", index, "]");
 		}
+
+		public string GetSearchUrl()
+		{
+			return @"https://unionleitor.top/assets/busca.php?q=";
+		}
 	}
 }
