@@ -31,7 +31,7 @@ namespace MangaCrawler.API
 			// Register the Swagger generator, defining 1 or more Swagger documents
 			services.AddSwaggerGen(c =>
 			{
-				c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+				c.SwaggerDoc("v1", new OpenApiInfo { Title = "MangaCrawler API", Version = "v1" });
 			});
 		}
 
@@ -46,7 +46,7 @@ namespace MangaCrawler.API
 			// specifying the Swagger JSON endpoint.
 			app.UseSwaggerUI(c =>
 			{
-				c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+				c.SwaggerEndpoint("/swagger/v1/swagger.json", "MangaCrawler API V1");
 				//c.RoutePrefix = string.Empty;
 			});
 
