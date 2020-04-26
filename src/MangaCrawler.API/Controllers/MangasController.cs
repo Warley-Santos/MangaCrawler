@@ -22,15 +22,15 @@ namespace MangaCrawler.API.Controllers
 		}
 
 		[HttpGet("Ascending")]
-		public IEnumerable<Manga> GetMangasAscendingOrder()
+		public IEnumerable<Manga> GetMangasAscendingOrder(bool nextPage = true)
 		{
-			return Crawler.GetMangasAscendingOrder();
+			return Crawler.GetMangasAscendingOrder(nextPage);
 		}
 
 		[HttpGet("Visualization")]
-		public IEnumerable<Manga> GetMangasVisualizationOrder()
+		public IEnumerable<Manga> GetMangasVisualizationOrder(bool nextPage = true)
 		{
-			return Crawler.GetMangasVisualizationOrder();
+			return Crawler.GetMangasVisualizationOrder(nextPage);
 		}
 
 		[HttpGet("Chapter/{mangaUrl}")]

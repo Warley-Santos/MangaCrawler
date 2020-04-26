@@ -16,7 +16,7 @@ namespace MangaCrawlerTests
 		[Fact]
 		public void GetTitulosAscendingTest()
 		{
-			var titles = Crawler.GetMangasAscendingOrder();
+			var titles = Crawler.GetMangasAscendingOrder(true);
 
 			Assert.NotNull(titles[0].MangaCoverUrl);
 			Assert.NotNull(titles[0].MangaName);
@@ -26,7 +26,7 @@ namespace MangaCrawlerTests
 		[Fact]
 		public void GetMangasVisualizationOrderTest()
 		{
-			var titles = Crawler.GetMangasVisualizationOrder();
+			var titles = Crawler.GetMangasVisualizationOrder(true);
 
 			Assert.NotNull(titles[0].MangaCoverUrl);
 			Assert.NotNull(titles[0].MangaName);

@@ -11,20 +11,42 @@ namespace MangaCrawler
 	public class UnionMangasCrawler : IWebCrawler
 	{
 		public ISource Source;
+		private static int _page = 0;
 
 		public UnionMangasCrawler(ISource source)
 		{
 			this.Source = source;
 		}
 
-		public List<Manga> GetMangasAscendingOrder()
+		public List<Manga> GetMangasAscendingOrder(bool next)
 		{
-			return GetMangas(Source.GetMangasAscendingOrderUrl());
+			if (next)
+				return GetMangasNextPage(Source.GetMangasAscendingOrderUrl());
+			else
+				return GetMangasPreviousPage(Source.GetMangasAscendingOrderUrl());
 		}
 
-		public List<Manga> GetMangasVisualizationOrder()
+		public List<Manga> GetMangasVisualizationOrder(bool next)
 		{
-			return GetMangas(Source.GetMangasVisualizationOrderUrl());
+			if (next)
+				return GetMangasNextPage(Source.GetMangasVisualizationOrderUrl());
+			else
+				return GetMangasPreviousPage(Source.GetMangasVisualizationOrderUrl());
+		}
+
+		public List<Manga> GetMangasNextPage(string sortingUrl)
+		{
+			_page++;
+			return GetMangas(sortingUrl + "/" + _page.ToString());
+		}
+		public List<Manga> GetMangasPreviousPage(string sortingUrl)
+		{
+			if (_page > 1)
+				_page--;
+			else if (_page == 0)
+				_page = 1;
+
+			return GetMangas(sortingUrl + "/" + _page.ToString());
 		}
 
 		public List<Manga> GetMangas(string sortingUrl)
@@ -100,7 +122,7 @@ namespace MangaCrawler
 			string result = t.Result.Replace(@"\", "");
 
 			MangaResultList mangas = JsonConvert.DeserializeObject<MangaResultList>(result);
-			
+
 			return mangas.items;
 		}
 	}
