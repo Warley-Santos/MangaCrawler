@@ -2,12 +2,12 @@
 {
 	public interface ISource
 	{
-		public string GetMangasAscendingOrderUrl();
-		public string GetMangasVisualizationOrderUrl();
-		public string GetChapterListPath();
-		public string GetChapterPagesPath();
-		public string GetMangaListPath();
-		public string GetMangaListPath(int i);
-		public string GetSearchUrl();
+		string GetMangasAscendingOrderUrl();
+		string GetMangasVisualizationOrderUrl();
+		string GetChapterListPath();
+		string GetChapterPagesPath();
+		string GetMangaListPath();
+		string GetMangaListPath(int i);
+		string GetSearchUrl();
 	}
 }
