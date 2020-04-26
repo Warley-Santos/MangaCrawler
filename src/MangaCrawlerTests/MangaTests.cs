@@ -22,6 +22,7 @@ namespace MangaCrawlerTests
 			Assert.NotNull(titles[0].MangaName);
 			Assert.NotNull(titles[0].MangaUrl);
 		}
+
 		[Fact]
 		public void GetMangasVisualizationOrderTest()
 		{
@@ -31,6 +32,7 @@ namespace MangaCrawlerTests
 			Assert.NotNull(titles[0].MangaName);
 			Assert.NotNull(titles[0].MangaUrl);
 		}
+
 		[Fact]
 		public void GetCapitulosUrlTest()
 		{
@@ -38,7 +40,7 @@ namespace MangaCrawlerTests
 
 			Assert.Equal("Cap. 00", chapters[0].Name);
 			Assert.Equal("26/11/2018", chapters[0].ReleaseDate);
-			Assert.Equal(@"http://unionmangas.top/leitor/Solo_Leveling/00", chapters[0].ChapterUrl);
+			Assert.Equal(@"https://unionleitor.top/leitor/Solo_Leveling/00", chapters[0].ChapterUrl);
 		}
 		
 		[Fact]
