@@ -4,26 +4,27 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace MangaCrawler
 {
 	public class UnionMangasCrawler : IWebCrawler
 	{
-		public ISource Source;
+		private readonly ISource _source;
 
 		public UnionMangasCrawler(ISource source)
 		{
-			this.Source = source;
+			_source = source;
 		}
 
 		public List<Manga> GetMangasAscendingOrder(int page)
 		{
-			return GetMangas(Source.GetAscendingOrderUrl() + "/" + page.ToString());
+			return GetMangas(_source.GetAscendingOrderUrl() + "/" + page.ToString());
 		}
 
 		public List<Manga> GetMangasVisualizationOrder(int page)
 		{
-			return GetMangas(Source.GetVisualizationOrderUrl() + "/" + page.ToString());
+			return GetMangas(_source.GetVisualizationOrderUrl() + "/" + page.ToString());
 		}
 
 		public List<Manga> GetMangas(string sortingUrl)
@@ -31,14 +32,14 @@ namespace MangaCrawler
 			List<Manga> mangasList = new List<Manga>();
 
 			HtmlDocument htmlDoc = HtmlUtils.LoadUrl(sortingUrl);
-			HtmlNodeCollection mangaNodes = HtmlUtils.GetHtmlNodes(htmlDoc, Source.GetMangaListPath());
+			HtmlNodeCollection mangaNodes = HtmlUtils.GetHtmlNodes(htmlDoc, _source.GetMangaListPath());
 
 			for (var i = 0; i < mangaNodes.Count; i++)
 			{
 				// TODO: melhorar a forma de buscar os nodes
-				var coverUrl = mangaNodes[i].SelectSingleNode(Source.GetMangaListPath(i + 1) + "/a[1]/img").GetAttributeValue("src", "");
-				var titleUrl = mangaNodes[i].SelectSingleNode(Source.GetMangaListPath(i + 1) + "/a[2]").GetAttributeValue("href", "");
-				var titleName = mangaNodes[i].SelectSingleNode(Source.GetMangaListPath(i + 1) + "/a[2]").InnerHtml.Trim();
+				var coverUrl = mangaNodes[i].SelectSingleNode(_source.GetMangaListPath(i + 1) + "/a[1]/img").GetAttributeValue("src", "");
+				var titleUrl = mangaNodes[i].SelectSingleNode(_source.GetMangaListPath(i + 1) + "/a[2]").GetAttributeValue("href", "");
+				var titleName = mangaNodes[i].SelectSingleNode(_source.GetMangaListPath(i + 1) + "/a[2]").InnerHtml.Trim();
 
 				mangasList.Add(new Manga(titleName, coverUrl, titleUrl));
 			}
@@ -46,15 +47,18 @@ namespace MangaCrawler
 			return mangasList;
 		}
 
-		public List<Chapter> GetChapters(string url)
+		public List<Chapter> GetChapters(string url, bool isId)
 		{
 			List<Chapter> chaptersList = new List<Chapter>();
 
 			HtmlDocument mangaPage;
 
+			if (isId)
+				url = HttpUtility.UrlDecode(_source.GetBaseUrlTitle() + url);
+
 			mangaPage = HtmlUtils.LoadUrl(url);
 
-			var chapterNodes = HtmlUtils.GetHtmlNodes(mangaPage, Source.GetChapterListPath());
+			var chapterNodes = HtmlUtils.GetHtmlNodes(mangaPage, _source.GetChapterListPath());
 
 			for (var i = chapterNodes.Count - 1; i >= 0; i--)
 			{
@@ -76,7 +80,7 @@ namespace MangaCrawler
 
 			chapterPages = HtmlUtils.LoadUrl(url);
 
-			var pageNodes = HtmlUtils.GetHtmlNodes(chapterPages, Source.GetChapterPagesPath());
+			var pageNodes = HtmlUtils.GetHtmlNodes(chapterPages, _source.GetChapterPagesPath());
 
 			int pageNumber = 0;
 
@@ -93,7 +97,7 @@ namespace MangaCrawler
 
 		public List<MangaResultSearch> Search(string param)
 		{
-			var t = Task.Run(() => HttpUtils.GetURI(new Uri(Source.GetSearchUrl() + param)));
+			var t = Task.Run(() => HttpUtils.GetURI(new Uri(_source.GetSearchUrl() + param)));
 			t.Wait();
 
 			string result = t.Result.Replace(@"\", "");

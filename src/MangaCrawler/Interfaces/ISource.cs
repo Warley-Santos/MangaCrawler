@@ -9,5 +9,6 @@
 		string GetMangaListPath();
 		string GetMangaListPath(int i);
 		string GetSearchUrl();
+		string GetBaseUrlTitle();
 	}
 }

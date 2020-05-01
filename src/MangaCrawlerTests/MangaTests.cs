@@ -36,7 +36,7 @@ namespace MangaCrawlerTests
 		[Fact]
 		public void GetCapitulosUrlTest()
 		{
-			var chapters = Crawler.GetChapters(@"https://unionleitor.top/manga/solo-leveling");
+			var chapters = Crawler.GetChapters(@"https://unionleitor.top/manga/solo-leveling", false);
 
 			Assert.Equal("Cap. 00", chapters[0].Name);
 			Assert.Equal("26/11/2018", chapters[0].ReleaseDate);

@@ -28,6 +28,9 @@ namespace MangaCrawler.API
 		{
 			services.AddControllers();
 
+			services.AddScoped<ISource, UnionMangasSource>();
+			services.AddScoped<IWebCrawler, UnionMangasCrawler>();
+
 			// Register the Swagger generator, defining 1 or more Swagger documents
 			services.AddSwaggerGen(c =>
 			{

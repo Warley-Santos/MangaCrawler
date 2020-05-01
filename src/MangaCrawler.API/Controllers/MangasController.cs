@@ -9,42 +9,41 @@ namespace MangaCrawler.API.Controllers
     [ApiController]
     public class MangasController : ControllerBase
     {
-		private IWebCrawler Crawler;
+		private readonly IWebCrawler _crawler;
 
-		public MangasController()
+		public MangasController(IWebCrawler crawler)
 		{
-			var source = new UnionMangasSource();
-			Crawler = new UnionMangasCrawler(source);
+			_crawler = crawler;
 		}
 
 		[HttpGet("Ascending")]
 		public IEnumerable<Manga> GetMangasAscendingOrder(int page = 1)
 		{
-			return Crawler.GetMangasAscendingOrder(page);
+			return _crawler.GetMangasAscendingOrder(page);
 		}
 
 		[HttpGet("Visualization")]
 		public IEnumerable<Manga> GetMangasVisualizationOrder(int page = 1)
 		{
-			return Crawler.GetMangasVisualizationOrder(page);
+			return _crawler.GetMangasVisualizationOrder(page);
 		}
 
 		[HttpGet("Chapter/{mangaUrl}")]
-		public IEnumerable<Chapter> GetChapters(string mangaUrl)
+		public IEnumerable<Chapter> GetChapters(string mangaUrl, bool isId)
 		{
-			return Crawler.GetChapters(HttpUtility.UrlDecode(mangaUrl));
+			return _crawler.GetChapters(mangaUrl, isId);
 		}
 
 		[HttpGet("Chapter/Pages/{chapterUrl}")]
 		public IEnumerable<Page> GetPages(string chapterUrl)
 		{
-			return Crawler.GetPages(HttpUtility.UrlDecode(chapterUrl));
+			return _crawler.GetPages(HttpUtility.UrlDecode(chapterUrl));
 		}
 
 		[HttpGet("Search/{param}")]
 		public IEnumerable<MangaResultSearch> Search(string param)
 		{
-			return Crawler.Search(param);
+			return _crawler.Search(param);
 		}
 	}
 }

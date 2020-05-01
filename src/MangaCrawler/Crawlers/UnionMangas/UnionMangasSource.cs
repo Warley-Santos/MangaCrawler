@@ -46,5 +46,10 @@ namespace MangaCrawler
 		{
 			return @"https://unionleitor.top/assets/busca.php?q=";
 		}
+		
+		public string GetBaseUrlTitle()
+		{
+			return @"https://unionleitor.top/perfil-manga/";
+		}
 	}
 }
