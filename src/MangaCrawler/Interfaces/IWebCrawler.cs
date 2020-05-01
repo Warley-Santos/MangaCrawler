@@ -1,15 +1,13 @@
-﻿using System.Collections.Generic;
-using MangaCrawler.Model;
+﻿using MangaCrawler.Model;
+using System.Collections.Generic;
 
 namespace MangaCrawler
 {
 	public interface IWebCrawler
 	{
 		List<Manga> GetMangas(string sortingUrl);
-		List<Manga> GetMangasNextPage(string sortingUrl);
-		List<Manga> GetMangasPreviousPage(string sortingUrl);
-		List<Manga> GetMangasAscendingOrder(bool next);
-		List<Manga> GetMangasVisualizationOrder(bool next);
+		List<Manga> GetMangasAscendingOrder(int page);
+		List<Manga> GetMangasVisualizationOrder(int page);
 		List<Chapter> GetChapters(string url);
 		List<Page> GetPages(string url);
 		List<MangaResultSearch> Search(string param);

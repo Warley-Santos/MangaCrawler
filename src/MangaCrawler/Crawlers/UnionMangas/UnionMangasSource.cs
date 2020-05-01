@@ -4,12 +4,12 @@ namespace MangaCrawler
 {
 	public class UnionMangasSource : ISource
 	{
-		public string GetMangasAscendingOrderUrl()
+		public string GetAscendingOrderUrl()
 		{
 			return @"https://unionleitor.top/lista-mangas/a-z";
 		}
 
-		public string GetMangasVisualizationOrderUrl()
+		public string GetVisualizationOrderUrl()
 		{
 			return @"https://unionleitor.top/lista-mangas/visualizacoes";
 		}

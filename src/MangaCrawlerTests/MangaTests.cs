@@ -1,5 +1,5 @@
-using Xunit;
 using MangaCrawler;
+using Xunit;
 
 namespace MangaCrawlerTests
 {
@@ -16,7 +16,7 @@ namespace MangaCrawlerTests
 		[Fact]
 		public void GetTitulosAscendingTest()
 		{
-			var titles = Crawler.GetMangasAscendingOrder(true);
+			var titles = Crawler.GetMangasAscendingOrder(1);
 
 			Assert.NotNull(titles[0].MangaCoverUrl);
 			Assert.NotNull(titles[0].MangaName);
@@ -26,7 +26,7 @@ namespace MangaCrawlerTests
 		[Fact]
 		public void GetMangasVisualizationOrderTest()
 		{
-			var titles = Crawler.GetMangasVisualizationOrder(true);
+			var titles = Crawler.GetMangasVisualizationOrder(1);
 
 			Assert.NotNull(titles[0].MangaCoverUrl);
 			Assert.NotNull(titles[0].MangaName);

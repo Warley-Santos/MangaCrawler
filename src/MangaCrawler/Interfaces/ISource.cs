@@ -2,8 +2,8 @@
 {
 	public interface ISource
 	{
-		string GetMangasAscendingOrderUrl();
-		string GetMangasVisualizationOrderUrl();
+		string GetAscendingOrderUrl();
+		string GetVisualizationOrderUrl();
 		string GetChapterListPath();
 		string GetChapterPagesPath();
 		string GetMangaListPath();

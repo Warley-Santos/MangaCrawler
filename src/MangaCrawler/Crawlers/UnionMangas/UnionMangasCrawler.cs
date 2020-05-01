@@ -3,7 +3,6 @@ using MangaCrawler.Model;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MangaCrawler
@@ -11,42 +10,20 @@ namespace MangaCrawler
 	public class UnionMangasCrawler : IWebCrawler
 	{
 		public ISource Source;
-		private static int _page = 0;
 
 		public UnionMangasCrawler(ISource source)
 		{
 			this.Source = source;
 		}
 
-		public List<Manga> GetMangasAscendingOrder(bool next)
+		public List<Manga> GetMangasAscendingOrder(int page)
 		{
-			if (next)
-				return GetMangasNextPage(Source.GetMangasAscendingOrderUrl());
-			else
-				return GetMangasPreviousPage(Source.GetMangasAscendingOrderUrl());
+			return GetMangas(Source.GetAscendingOrderUrl() + "/" + page.ToString());
 		}
 
-		public List<Manga> GetMangasVisualizationOrder(bool next)
+		public List<Manga> GetMangasVisualizationOrder(int page)
 		{
-			if (next)
-				return GetMangasNextPage(Source.GetMangasVisualizationOrderUrl());
-			else
-				return GetMangasPreviousPage(Source.GetMangasVisualizationOrderUrl());
-		}
-
-		public List<Manga> GetMangasNextPage(string sortingUrl)
-		{
-			_page++;
-			return GetMangas(sortingUrl + "/" + _page.ToString());
-		}
-		public List<Manga> GetMangasPreviousPage(string sortingUrl)
-		{
-			if (_page > 1)
-				_page--;
-			else if (_page == 0)
-				_page = 1;
-
-			return GetMangas(sortingUrl + "/" + _page.ToString());
+			return GetMangas(Source.GetVisualizationOrderUrl() + "/" + page.ToString());
 		}
 
 		public List<Manga> GetMangas(string sortingUrl)

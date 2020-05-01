@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using MangaCrawler.Model;
-using Microsoft.AspNetCore.Http;
+﻿using MangaCrawler.Model;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Web;
 
 namespace MangaCrawler.API.Controllers
 {
-    [Route("api/[controller]")]
+	[Route("api/[controller]")]
     [ApiController]
     public class MangasController : ControllerBase
     {
@@ -22,15 +18,15 @@ namespace MangaCrawler.API.Controllers
 		}
 
 		[HttpGet("Ascending")]
-		public IEnumerable<Manga> GetMangasAscendingOrder(bool nextPage = true)
+		public IEnumerable<Manga> GetMangasAscendingOrder(int page = 1)
 		{
-			return Crawler.GetMangasAscendingOrder(nextPage);
+			return Crawler.GetMangasAscendingOrder(page);
 		}
 
 		[HttpGet("Visualization")]
-		public IEnumerable<Manga> GetMangasVisualizationOrder(bool nextPage = true)
+		public IEnumerable<Manga> GetMangasVisualizationOrder(int page = 1)
 		{
-			return Crawler.GetMangasVisualizationOrder(nextPage);
+			return Crawler.GetMangasVisualizationOrder(page);
 		}
 
 		[HttpGet("Chapter/{mangaUrl}")]
