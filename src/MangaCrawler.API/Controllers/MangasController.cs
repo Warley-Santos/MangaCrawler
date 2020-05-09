@@ -5,9 +5,10 @@ using System.Web;
 
 namespace MangaCrawler.API.Controllers
 {
-	[Route("api/[controller]")]
     [ApiController]
-    public class MangasController : ControllerBase
+	[Route("api/[controller]")]
+	[Produces("application/json")]
+	public class MangasController : ControllerBase
     {
 		private readonly IWebCrawler _crawler;
 
