@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Caching.Memory;
 using System.Web;
 
 namespace MangaCrawler
@@ -11,22 +12,37 @@ namespace MangaCrawler
 	public class UnionMangasCrawler : IWebCrawler
 	{
 		private readonly ISource _source;
+		private IMemoryCache _cache;
 
-		public UnionMangasCrawler(ISource source)
+		public UnionMangasCrawler(ISource source, IMemoryCache memoryCache)
 		{
 			_source = source;
+			_cache = memoryCache;
 		}
 
 		public List<Manga> GetMangasAscendingOrder(int page)
 		{
-			return GetMangas(_source.GetAscendingOrderUrl() + "/" + page.ToString());
+			return GetMangasFromCache(_source.GetAscendingOrderUrl() + "/" + page.ToString());
 		}
 
 		public List<Manga> GetMangasVisualizationOrder(int page)
 		{
-			return GetMangas(_source.GetVisualizationOrderUrl() + "/" + page.ToString());
+			return GetMangasFromCache(_source.GetVisualizationOrderUrl() + "/" + page.ToString());
 		}
 
+		public List<Manga> GetMangasFromCache(string sortingUrl)
+		{
+			var cacheEntry = _cache.GetOrCreate(sortingUrl, entry =>
+			{
+				entry.SetSlidingExpiration(TimeSpan.FromSeconds(30));
+				entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(30);
+
+				return GetMangas(sortingUrl);
+			});
+
+			return cacheEntry;
+		}	
+		
 		public List<Manga> GetMangas(string sortingUrl)
 		{
 			List<Manga> mangasList = new List<Manga>();
@@ -54,9 +70,9 @@ namespace MangaCrawler
 			HtmlDocument mangaPage;
 
 			if (isId)
-				url = HttpUtility.UrlDecode(_source.GetBaseUrlTitle() + url);
+				url = _source.GetBaseUrlTitle() + url;
 
-			mangaPage = HtmlUtils.LoadUrl(url);
+			mangaPage = HtmlUtils.LoadUrl(HttpUtility.UrlDecode(url));
 
 			var chapterNodes = HtmlUtils.GetHtmlNodes(mangaPage, _source.GetChapterListPath());
 

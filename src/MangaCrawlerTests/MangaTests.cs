@@ -1,22 +1,25 @@
 using MangaCrawler;
+using Microsoft.Extensions.Caching.Memory;
 using Xunit;
 
 namespace MangaCrawlerTests
 {
 	public class MangaTests
 	{
-		private IWebCrawler Crawler;
+		private IWebCrawler _crawler;
 
 		public MangaTests()
 		{
+			var memoryCache = new MemoryCache(new MemoryCacheOptions());
 			var source = new UnionMangasSource();
-			Crawler = new UnionMangasCrawler(source);
+			
+			_crawler = new UnionMangasCrawler(source, memoryCache);
 		}
 
 		[Fact]
 		public void GetTitulosAscendingTest()
 		{
-			var titles = Crawler.GetMangasAscendingOrder(1);
+			var titles = _crawler.GetMangasAscendingOrder(1);
 
 			Assert.NotNull(titles[0].MangaCoverUrl);
 			Assert.NotNull(titles[0].MangaName);
@@ -26,7 +29,7 @@ namespace MangaCrawlerTests
 		[Fact]
 		public void GetMangasVisualizationOrderTest()
 		{
-			var titles = Crawler.GetMangasVisualizationOrder(1);
+			var titles = _crawler.GetMangasVisualizationOrder(1);
 
 			Assert.NotNull(titles[0].MangaCoverUrl);
 			Assert.NotNull(titles[0].MangaName);
@@ -36,7 +39,7 @@ namespace MangaCrawlerTests
 		[Fact]
 		public void GetCapitulosUrlTest()
 		{
-			var chapters = Crawler.GetChapters(@"https://unionleitor.top/manga/solo-leveling", false);
+			var chapters = _crawler.GetChapters(@"https://unionleitor.top/manga/solo-leveling", false);
 
 			Assert.Equal("Cap. 00", chapters[0].Name);
 			Assert.Equal("26/11/2018", chapters[0].ReleaseDate);
@@ -46,7 +49,7 @@ namespace MangaCrawlerTests
 		[Fact]
 		public void GetPaginasTest()
 		{
-			var pages = Crawler.GetPages(@"http://unionmangas.top/leitor/Solo_Leveling/00");
+			var pages = _crawler.GetPages(@"http://unionmangas.top/leitor/Solo_Leveling/00");
 
 			Assert.NotNull(pages);
 			Assert.NotNull(pages[0].PageUrl);
@@ -55,7 +58,7 @@ namespace MangaCrawlerTests
 		[Fact]
 		public void SearchTest()
 		{
-			var mangas = Crawler.Search("Solo Leveling");
+			var mangas = _crawler.Search("Solo Leveling");
 
 			Assert.Equal("Solo Leveling", mangas[0].Titulo);
 			Assert.Equal("Solo Leveling (Novel)", mangas[1].Titulo);

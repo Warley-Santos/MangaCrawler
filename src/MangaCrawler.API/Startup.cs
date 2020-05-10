@@ -28,6 +28,8 @@ namespace MangaCrawler.API
 		{
 			services.AddControllers();
 
+			services.AddMemoryCache();
+
 			services.AddScoped<ISource, UnionMangasSource>();
 			services.AddScoped<IWebCrawler, UnionMangasCrawler>();
 
