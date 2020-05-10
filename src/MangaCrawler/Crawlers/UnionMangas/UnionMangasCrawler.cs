@@ -63,16 +63,17 @@ namespace MangaCrawler
 			return mangasList;
 		}
 
-		public List<Chapter> GetChapters(string url, bool isId)
+		public List<Chapter> GetChaptersById(string mangaId)
+		{
+			return GetChapters(_source.GetBaseUrlTitle() + mangaId);
+		}
+
+		public List<Chapter> GetChapters(string mangaUrl)
 		{
 			List<Chapter> chaptersList = new List<Chapter>();
-
 			HtmlDocument mangaPage;
 
-			if (isId)
-				url = _source.GetBaseUrlTitle() + url;
-
-			mangaPage = HtmlUtils.LoadUrl(HttpUtility.UrlDecode(url));
+			mangaPage = HtmlUtils.LoadUrl(HttpUtility.UrlDecode(mangaUrl));
 
 			var chapterNodes = HtmlUtils.GetHtmlNodes(mangaPage, _source.GetChapterListPath());
 
@@ -91,7 +92,6 @@ namespace MangaCrawler
 		public List<Page> GetPages(string url)
 		{
 			List<Page> pagesList = new List<Page>();
-
 			HtmlDocument chapterPages;
 
 			chapterPages = HtmlUtils.LoadUrl(url);

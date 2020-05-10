@@ -7,39 +7,52 @@ namespace MangaCrawlerTests
 	public class MangaTests
 	{
 		private IWebCrawler _crawler;
+		private ISource _source;
 
 		public MangaTests()
 		{
 			var memoryCache = new MemoryCache(new MemoryCacheOptions());
-			var source = new UnionMangasSource();
 			
-			_crawler = new UnionMangasCrawler(source, memoryCache);
+			_source = new UnionMangasSource();
+			_crawler = new UnionMangasCrawler(_source, memoryCache);
 		}
 
 		[Fact]
-		public void GetTitulosAscendingTest()
+		public void GetMangasAscendingOrderTest()
 		{
-			var titles = _crawler.GetMangasAscendingOrder(1);
+			var page = 1;
+			var titles = _crawler.GetMangasAscendingOrder(page);
 
-			Assert.NotNull(titles[0].MangaCoverUrl);
-			Assert.NotNull(titles[0].MangaName);
-			Assert.NotNull(titles[0].MangaUrl);
+			Assert.True(!string.IsNullOrEmpty(titles[0].MangaCoverUrl));
+			Assert.True(!string.IsNullOrEmpty(titles[0].MangaName));
+			Assert.True(!string.IsNullOrEmpty(titles[0].MangaUrl));
 		}
 
 		[Fact]
 		public void GetMangasVisualizationOrderTest()
 		{
-			var titles = _crawler.GetMangasVisualizationOrder(1);
+			var page = 1;
+			var titles = _crawler.GetMangasVisualizationOrder(page);
 
-			Assert.NotNull(titles[0].MangaCoverUrl);
-			Assert.NotNull(titles[0].MangaName);
-			Assert.NotNull(titles[0].MangaUrl);
+			Assert.True(!string.IsNullOrEmpty(titles[0].MangaCoverUrl));
+			Assert.True(!string.IsNullOrEmpty(titles[0].MangaName));
+			Assert.True(!string.IsNullOrEmpty(titles[0].MangaUrl));
 		}
 
 		[Fact]
-		public void GetCapitulosUrlTest()
+		public void GetChaptersByIdTest()
 		{
-			var chapters = _crawler.GetChapters(@"https://unionleitor.top/manga/solo-leveling", false);
+			var chapters = _crawler.GetChapters(_source.GetBaseUrlTitle() + "solo-leveling");
+
+			Assert.Equal("Cap. 00", chapters[0].Name);
+			Assert.Equal("26/11/2018", chapters[0].ReleaseDate);
+			Assert.Equal(@"https://unionleitor.top/leitor/Solo_Leveling/00", chapters[0].ChapterUrl);
+		}
+
+		[Fact]
+		public void GetChaptersTest()
+		{
+			var chapters = _crawler.GetChapters(@"https://unionleitor.top/manga/solo-leveling");
 
 			Assert.Equal("Cap. 00", chapters[0].Name);
 			Assert.Equal("26/11/2018", chapters[0].ReleaseDate);
@@ -47,12 +60,12 @@ namespace MangaCrawlerTests
 		}
 		
 		[Fact]
-		public void GetPaginasTest()
+		public void GetPagesTest()
 		{
 			var pages = _crawler.GetPages(@"http://unionmangas.top/leitor/Solo_Leveling/00");
 
 			Assert.NotNull(pages);
-			Assert.NotNull(pages[0].PageUrl);
+			Assert.True(!string.IsNullOrEmpty(pages[0].PageUrl));
 		}
 
 		[Fact]
@@ -63,6 +76,5 @@ namespace MangaCrawlerTests
 			Assert.Equal("Solo Leveling", mangas[0].Titulo);
 			Assert.Equal("Solo Leveling (Novel)", mangas[1].Titulo);
 		}
-
 	}
 }
