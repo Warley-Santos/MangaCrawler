@@ -34,8 +34,8 @@ namespace MangaCrawler
 		{
 			var cacheEntry = _cache.GetOrCreate(sortingUrl, entry =>
 			{
-				entry.SetSlidingExpiration(TimeSpan.FromSeconds(30));
-				entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(30);
+				entry.SetSlidingExpiration(TimeSpan.FromSeconds(600));
+				entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(600);
 
 				return GetMangas(sortingUrl);
 			});
