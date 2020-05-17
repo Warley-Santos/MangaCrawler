@@ -64,19 +64,20 @@ namespace MangaCrawler
 			return mangasList;
 		}
 
-		public List<Chapter> GetChaptersById(string mangaId)
+		public MangaProfile GetMangaById(string mangaId)
 		{
-			return GetChapters(_source.GetBaseUrlTitle() + mangaId);
+			return GetMangaByUrl(_source.GetBaseUrlTitle() + mangaId);
 		}
 
-		public List<Chapter> GetChapters(string mangaUrl)
+		public MangaProfile GetMangaByUrl(string mangaUrl)
 		{
-			List<Chapter> chaptersList = new List<Chapter>();
-			HtmlDocument mangaPage;
+			MangaProfile manga = new MangaProfile();
 
-			mangaPage = HtmlUtils.LoadUrl(HttpUtility.UrlDecode(mangaUrl));
-
+			var mangaPage = HtmlUtils.LoadUrl(HttpUtility.UrlDecode(mangaUrl));
+			var mangaName = HtmlUtils.GetHtmlNodes(mangaPage, _source.GetMangaNamePath());
 			var chapterNodes = HtmlUtils.GetHtmlNodes(mangaPage, _source.GetChapterListPath());
+
+			manga.MangaName = mangaName[0].InnerText;
 
 			for (var i = chapterNodes.Count - 1; i >= 0; i--)
 			{
@@ -84,10 +85,10 @@ namespace MangaCrawler
 				var chapterUrl = chapterNodes[i].ChildNodes[3].GetAttributeValue("href", "");
 				var releaseDate = chapterNodes[i].ChildNodes[5].InnerHtml.Replace("(", "").Replace(")", "");
 
-				chaptersList.Add(new Chapter(name, releaseDate, chapterUrl));
+				manga.Chapters.Add(new Chapter(name, releaseDate, chapterUrl));
 			}
 
-			return chaptersList;
+			return manga;
 		}
 
 		public List<Page> GetPages(string url)

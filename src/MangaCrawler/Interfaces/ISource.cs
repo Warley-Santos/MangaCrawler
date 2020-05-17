@@ -4,6 +4,7 @@
 	{
 		string GetAscendingOrderUrl();
 		string GetVisualizationOrderUrl();
+		string GetMangaNamePath();
 		string GetChapterListPath();
 		string GetChapterPagesPath();
 		string GetMangaListPath();

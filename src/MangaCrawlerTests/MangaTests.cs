@@ -40,23 +40,23 @@ namespace MangaCrawlerTests
 		}
 
 		[Fact]
-		public void GetChaptersByIdTest()
+		public void GetMangaByIdTest()
 		{
-			var chapters = _crawler.GetChapters(_source.GetBaseUrlTitle() + "solo-leveling");
+			var manga = _crawler.GetMangaByUrl(_source.GetBaseUrlTitle() + "solo-leveling");
 
-			Assert.Equal("Cap. 00", chapters[0].Name);
-			Assert.Equal("26/11/2018", chapters[0].ReleaseDate);
-			Assert.Equal(@"https://unionleitor.top/leitor/Solo_Leveling/00", chapters[0].ChapterUrl);
+			Assert.Equal("Cap. 00", manga.Chapters[0].Name);
+			Assert.Equal("26/11/2018", manga.Chapters[0].ReleaseDate);
+			Assert.Equal(@"https://unionleitor.top/leitor/Solo_Leveling/00", manga.Chapters[0].ChapterUrl);
 		}
 
 		[Fact]
-		public void GetChaptersTest()
+		public void GetMangaByUrlTest()
 		{
-			var chapters = _crawler.GetChapters(@"https://unionleitor.top/manga/solo-leveling");
+			var manga = _crawler.GetMangaByUrl(@"https://unionleitor.top/manga/solo-leveling");
 
-			Assert.Equal("Cap. 00", chapters[0].Name);
-			Assert.Equal("26/11/2018", chapters[0].ReleaseDate);
-			Assert.Equal(@"https://unionleitor.top/leitor/Solo_Leveling/00", chapters[0].ChapterUrl);
+			Assert.Equal("Cap. 00", manga.Chapters[0].Name);
+			Assert.Equal("26/11/2018", manga.Chapters[0].ReleaseDate);
+			Assert.Equal(@"https://unionleitor.top/leitor/Solo_Leveling/00", manga.Chapters[0].ChapterUrl);
 		}
 		
 		[Fact]

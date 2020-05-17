@@ -14,6 +14,10 @@ namespace MangaCrawler
 			return @"https://unionleitor.top/lista-mangas/visualizacoes";
 		}
 
+		public string GetMangaNamePath()
+		{
+			return "/html/body/div[1]/div[1]/div[1]/div[1]/div/h2";
+		}
 		public string GetChapterListPath()
 		{
 			return "//div[@class = ('row lancamento-linha')]" +

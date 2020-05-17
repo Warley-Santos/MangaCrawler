@@ -29,16 +29,16 @@ namespace MangaCrawler.API.Controllers
 			return _crawler.GetMangasVisualizationOrder(page);
 		}
 
-		[HttpGet("ChaptersById/{mangaId}")]
-		public IEnumerable<Chapter> GetChaptersById(string mangaId)
+		[HttpGet("MangaById/{mangaId}")]
+		public MangaProfile GetChaptersById(string mangaId)
 		{
-			return _crawler.GetChaptersById(mangaId);
+			return _crawler.GetMangaById(mangaId);
 		}
 
-		[HttpGet("Chapters/{mangaUrl}")]
-		public IEnumerable<Chapter> GetChapters(string mangaUrl)
+		[HttpGet("MangaByUrl/{mangaUrl}")]
+		public MangaProfile GetChapters(string mangaUrl)
 		{
-			return _crawler.GetChapters(mangaUrl);
+			return _crawler.GetMangaByUrl(mangaUrl);
 		}
 
 		[HttpGet("Chapter/Pages/{chapterUrl}")]
