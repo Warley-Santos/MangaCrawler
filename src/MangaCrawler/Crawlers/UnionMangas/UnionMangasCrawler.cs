@@ -57,7 +57,8 @@ namespace MangaCrawler
 				var titleUrl = mangaNodes[i].SelectSingleNode(_source.GetMangaListPath(i + 1) + "/a[2]").GetAttributeValue("href", "");
 				var titleName = mangaNodes[i].SelectSingleNode(_source.GetMangaListPath(i + 1) + "/a[2]").InnerHtml.Trim();
 
-				mangasList.Add(new Manga(titleName, coverUrl, titleUrl));
+				var mangaId = titleUrl.Split("/")[4];
+				mangasList.Add(new Manga(mangaId, titleName, coverUrl, titleUrl));
 			}
 
 			return mangasList;
