@@ -16,7 +16,12 @@ namespace MangaCrawler
 
 		public string GetMangaNamePath()
 		{
-			return "/html/body/div[1]/div[1]/div[1]/div[1]/div/h2";
+			return "//div[@class = ('container')]" +
+				   "/div[@class = ('row')]" +
+				   "/div[@class = ('col-md-8 tamanho-bloco-perfil')]" +
+				   "/div[@class = ('row')]" +
+				   "/div[@class = ('col-md-12')]" +
+				   "/h2";
 		}
 		public string GetChapterListPath()
 		{
