@@ -42,7 +42,7 @@ namespace MangaCrawlerTests
 		[Fact]
 		public void GetMangaByIdTest()
 		{
-			var manga = _crawler.GetMangaByUrl(_source.GetBaseUrlTitle() + "solo-leveling");
+			var manga = _crawler.GetMangaById("solo-leveling");
 
 			Assert.Equal("Cap. 00", manga.Chapters[0].Name);
 			Assert.Equal("26/11/2018", manga.Chapters[0].ReleaseDate);
